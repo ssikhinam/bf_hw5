@@ -1,0 +1,65 @@
+---
+title: "Business Forecasting HW 5 - Sriven Sikhinam"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Business Forecasting HW 5 
+Sriven Sikhinam
+Professor Ronak Parikh 
+
+Loading Required Packages 
+Picked dataset is "auscafe" which depicts the monthly expenditure of restaurants in Australia
+```{r}
+library(fpp)
+library(fpp2)
+```
+
+Basic Time Series plotted, Basic attributes listed below of the graph. 
+```{r}
+df = auscafe
+head(df)
+attributes(df)
+plot(df)
+```
+Elements of Decomposition Listed Below 
+```{r}
+stl_decomp = stl(df,s.window = "periodic")
+plot(stl_decomp)
+
+attributes(stl_decomp)
+```
+```{r}
+seasadj(stl_decomp)
+```
+```{r}
+# Plot a line on the graph
+plot(df)
+lines(seasadj(stl_decomp), col="Red")
+```
+```{r}
+# Default period forecast
+f_stl <- forecast(stl_decomp)
+```
+```{r}
+# you can pass the # of period
+f_stl <- forecast(stl_decomp,h=15)
+f_stl
+```
+```{r}
+plot(f_stl)
+```
+```{r}
+# There is more than one way to do things
+decomp_df <- decompose(df)
+```
+```{r}
+# Each one shows different attributes 
+attributes(decomp_df)
+seasadj(decomp_df)
+```
